@@ -1,0 +1,244 @@
+{
+  "files": [
+    "vulnerable_app/app.py"
+  ],
+  "summary": {
+    "CRITICAL": 3,
+    "HIGH": 15,
+    "MEDIUM": 2,
+    "LOW": 1
+  },
+  "findings": [
+    {
+      "rule": "PY001",
+      "title": "SQL query built from dynamic string",
+      "severity": "CRITICAL",
+      "cwe": "CWE-89",
+      "owasp": "A03:2021 Injection",
+      "file": "vulnerable_app/app.py",
+      "line": 74,
+      "code": "user = get_db().execute(query).fetchone()",
+      "detail": "Query text is built by string operations; use parameterised queries (placeholders '?' / '%s') instead."
+    },
+    {
+      "rule": "PY002",
+      "title": "OS command execution through a shell",
+      "severity": "CRITICAL",
+      "cwe": "CWE-78",
+      "owasp": "A03:2021 Injection",
+      "file": "vulnerable_app/app.py",
+      "line": 128,
+      "code": "output = subprocess.check_output(\"ping -c 1 \" + host, shell=True, stderr=subprocess.STDOUT, timeout=10)",
+      "detail": "shell=True passes the command to /bin/sh; metacharacters in user input (; | && $()) execute arbitrary commands."
+    },
+    {
+      "rule": "PY003",
+      "title": "Unsafe deserialization",
+      "severity": "CRITICAL",
+      "cwe": "CWE-502",
+      "owasp": "A08:2021 Software and Data Integrity Failures",
+      "file": "vulnerable_app/app.py",
+      "line": 148,
+      "code": "notes_list = pickle.loads(data)",
+      "detail": "pickle.loads() can execute arbitrary code when given attacker-controlled data. Use JSON with schema validation."
+    },
+    {
+      "rule": "PY006",
+      "title": "Hard-coded secret or credential",
+      "severity": "HIGH",
+      "cwe": "CWE-798",
+      "owasp": "A07:2021 Identification and Authentication Failures",
+      "file": "vulnerable_app/app.py",
+      "line": 21,
+      "code": "app.secret_key = \"notekeeper-secret-123\"",
+      "detail": "'secret_key' is assigned a literal string; load it from the environment or a secrets manager instead."
+    },
+    {
+      "rule": "PY006",
+      "title": "Hard-coded secret or credential",
+      "severity": "HIGH",
+      "cwe": "CWE-798",
+      "owasp": "A07:2021 Identification and Authentication Failures",
+      "file": "vulnerable_app/app.py",
+      "line": 22,
+      "code": "ADMIN_PASSWORD = \"admin123\"",
+      "detail": "'ADMIN_PASSWORD' is assigned a literal string; load it from the environment or a secrets manager instead."
+    },
+    {
+      "rule": "PY008",
+      "title": "Autoescaping disabled in template (|safe / Markup)",
+      "severity": "HIGH",
+      "cwe": "CWE-79",
+      "owasp": "A03:2021 Injection",
+      "file": "vulnerable_app/app.py",
+      "line": 26,
+      "code": "PAGE = \"\"\"<!doctype html><title>NoteKeeper</title>",
+      "detail": "The Jinja '|safe' filter disables auto-escaping; any user data rendered through it leads to Cross-Site Scripting."
+    },
+    {
+      "rule": "PY005",
+      "title": "Weak hash algorithm (MD5/SHA1)",
+      "severity": "HIGH",
+      "cwe": "CWE-328",
+      "owasp": "A02:2021 Cryptographic Failures",
+      "file": "vulnerable_app/app.py",
+      "line": 48,
+      "code": "(user, hashlib.md5(pwd.encode()).hexdigest(), role))",
+      "detail": "MD5/SHA-1 are fast and broken; for passwords use a slow, salted KDF (scrypt, Argon2, bcrypt, PBKDF2)."
+    },
+    {
+      "rule": "PY005",
+      "title": "Weak hash algorithm (MD5/SHA1)",
+      "severity": "HIGH",
+      "cwe": "CWE-328",
+      "owasp": "A02:2021 Cryptographic Failures",
+      "file": "vulnerable_app/app.py",
+      "line": 72,
+      "code": "pwd_hash = hashlib.md5(password.encode()).hexdigest()",
+      "detail": "MD5/SHA-1 are fast and broken; for passwords use a slow, salted KDF (scrypt, Argon2, bcrypt, PBKDF2)."
+    },
+    {
+      "rule": "PY015",
+      "title": "HTML built from user input without escaping",
+      "severity": "HIGH",
+      "cwe": "CWE-79",
+      "owasp": "A03:2021 Injection",
+      "file": "vulnerable_app/app.py",
+      "line": 80,
+      "code": "return render(\"<p>Invalid credentials for user \" + username + \"</p>\"), 401",
+      "detail": "User-controlled data is concatenated into HTML without escaping (XSS). Use templates with auto-escaping."
+    },
+    {
+      "rule": "PY015",
+      "title": "HTML built from user input without escaping",
+      "severity": "HIGH",
+      "cwe": "CWE-79",
+      "owasp": "A03:2021 Injection",
+      "file": "vulnerable_app/app.py",
+      "line": 113,
+      "code": "return render(f\"<h2>{note['title']}</h2><p>{note['body']}</p>\")",
+      "detail": "User-controlled data is concatenated into HTML without escaping (XSS). Use templates with auto-escaping."
+    },
+    {
+      "rule": "PY015",
+      "title": "HTML built from user input without escaping",
+      "severity": "HIGH",
+      "cwe": "CWE-79",
+      "owasp": "A03:2021 Injection",
+      "file": "vulnerable_app/app.py",
+      "line": 119,
+      "code": "return render(f\"<form><input name='q' value='{q}'><button>Search</button></form>\"",
+      "detail": "User-controlled data is concatenated into HTML without escaping (XSS). Use templates with auto-escaping."
+    },
+    {
+      "rule": "PY015",
+      "title": "HTML built from user input without escaping",
+      "severity": "HIGH",
+      "cwe": "CWE-79",
+      "owasp": "A03:2021 Injection",
+      "file": "vulnerable_app/app.py",
+      "line": 129,
+      "code": "return render(\"<pre>\" + output.decode(errors=\"replace\") + \"</pre>\")",
+      "detail": "User-controlled data is concatenated into HTML without escaping (XSS). Use templates with auto-escaping."
+    },
+    {
+      "rule": "PY009",
+      "title": "File path built from user input",
+      "severity": "HIGH",
+      "cwe": "CWE-22",
+      "owasp": "A01:2021 Broken Access Control",
+      "file": "vulnerable_app/app.py",
+      "line": 135,
+      "code": "return send_file(os.path.join(UPLOAD_DIR, filename))",
+      "detail": "A file path is derived from user input; '../' or an absolute path escapes the intended directory. Use werkzeug.utils.secure_filename / safe_join and send_from_directory."
+    },
+    {
+      "rule": "PY016",
+      "title": "Uploaded file saved with client-supplied name",
+      "severity": "HIGH",
+      "cwe": "CWE-434",
+      "owasp": "A04:2021 Insecure Design",
+      "file": "vulnerable_app/app.py",
+      "line": 141,
+      "code": "f.save(os.path.join(UPLOAD_DIR, f.filename))",
+      "detail": "The client controls file.filename ('../../app.py'); sanitise it with secure_filename, restrict extensions and size."
+    },
+    {
+      "rule": "PY009",
+      "title": "File path built from user input",
+      "severity": "HIGH",
+      "cwe": "CWE-22",
+      "owasp": "A01:2021 Broken Access Control",
+      "file": "vulnerable_app/app.py",
+      "line": 141,
+      "code": "f.save(os.path.join(UPLOAD_DIR, f.filename))",
+      "detail": "A file path is derived from user input; '../' or an absolute path escapes the intended directory. Use werkzeug.utils.secure_filename / safe_join and send_from_directory."
+    },
+    {
+      "rule": "PY015",
+      "title": "HTML built from user input without escaping",
+      "severity": "HIGH",
+      "cwe": "CWE-79",
+      "owasp": "A03:2021 Injection",
+      "file": "vulnerable_app/app.py",
+      "line": 142,
+      "code": "return render(\"Uploaded \" + f.filename)",
+      "detail": "User-controlled data is concatenated into HTML without escaping (XSS). Use templates with auto-escaping."
+    },
+    {
+      "rule": "PY011",
+      "title": "Authorization decision based on client cookie",
+      "severity": "HIGH",
+      "cwe": "CWE-565",
+      "owasp": "A01:2021 Broken Access Control",
+      "file": "vulnerable_app/app.py",
+      "line": 154,
+      "code": "if request.cookies.get(\"role\") == \"admin\" or session.get(\"role\") == \"admin\":",
+      "detail": "Cookies are fully controlled by the client; never trust them for authorisation. Use the server-side session / database."
+    },
+    {
+      "rule": "PY007",
+      "title": "Flask debug mode enabled",
+      "severity": "HIGH",
+      "cwe": "CWE-489",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "file": "vulnerable_app/app.py",
+      "line": 168,
+      "code": "app.run(host=\"0.0.0.0\", port=5000, debug=True)",
+      "detail": "The Werkzeug debugger allows remote code execution and leaks source code. Never enable it outside local development."
+    },
+    {
+      "rule": "PY010",
+      "title": "Open redirect",
+      "severity": "MEDIUM",
+      "cwe": "CWE-601",
+      "owasp": "A01:2021 Broken Access Control",
+      "file": "vulnerable_app/app.py",
+      "line": 79,
+      "code": "return redirect(request.args.get(\"next\", \"/notes\"))",
+      "detail": "Redirect target comes from the request; attackers can send victims to a phishing site. Allow only relative, same-site paths."
+    },
+    {
+      "rule": "PY012",
+      "title": "Stack trace returned to the client",
+      "severity": "MEDIUM",
+      "cwe": "CWE-209",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "file": "vulnerable_app/app.py",
+      "line": 163,
+      "code": "return \"<pre>\" + traceback.format_exc() + \"</pre>\", 500",
+      "detail": "Internal stack traces leak file paths, code and library versions to attackers."
+    },
+    {
+      "rule": "PY014",
+      "title": "Server bound to all interfaces",
+      "severity": "LOW",
+      "cwe": "CWE-1327",
+      "owasp": "A05:2021 Security Misconfiguration",
+      "file": "vulnerable_app/app.py",
+      "line": 168,
+      "code": "app.run(host=\"0.0.0.0\", port=5000, debug=True)",
+      "detail": "Listening on 0.0.0.0 exposes the app on every network interface; put it behind a reverse proxy."
+    }
+  ]
+}

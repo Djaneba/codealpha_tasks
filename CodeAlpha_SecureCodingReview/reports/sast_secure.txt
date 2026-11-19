@@ -1,0 +1,4 @@
+pysast - scanned 1 file(s), 0 finding(s)
+
+Summary: CRITICAL=0, HIGH=0, MEDIUM=0, LOW=0
+JSON report written to reports/sast_secure.json

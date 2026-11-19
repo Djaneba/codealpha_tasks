@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}NoteKeeper{% endblock %}</title></head>
+<body>
+<header>
+  <h1><a href="{{ url_for('index') }}">NoteKeeper</a></h1>
+  {% set user = current_user() %}
+  {% if user %}
+    <p>Logged in as {{ user['username'] }} |
+      <a href="{{ url_for('notes') }}">Notes</a> | <a href="{{ url_for('search') }}">Search</a> |
+      <a href="{{ url_for('upload') }}">Upload</a> | <a href="{{ url_for('ping') }}">Network tool</a>
+      {% if user['role'] == 'admin' %}| <a href="{{ url_for('admin_users') }}">Admin</a>{% endif %}</p>
+    <form method="post" action="{{ url_for('logout') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button>Logout</button></form>
+  {% else %}<p><a href="{{ url_for('login') }}">Login</a></p>{% endif %}
+</header>
+{% with messages = get_flashed_messages() %}{% for m in messages %}<p class="flash">{{ m }}</p>{% endfor %}{% endwith %}
+<main>{% block content %}{% endblock %}</main>
+</body>
+</html>

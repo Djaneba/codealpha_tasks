@@ -1,0 +1,88 @@
+pysast - scanned 1 file(s), 21 finding(s)
+
+[CRITICAL] PY001 SQL query built from dynamic string  (CWE-89, A03:2021 Injection)
+           vulnerable_app/app.py:74  ->  user = get_db().execute(query).fetchone()
+           Query text is built by string operations; use parameterised queries (placeholders '?' / '%s') instead.
+
+[CRITICAL] PY002 OS command execution through a shell  (CWE-78, A03:2021 Injection)
+           vulnerable_app/app.py:128  ->  output = subprocess.check_output("ping -c 1 " + host, shell=True, stderr=subprocess.STDOUT, timeout=10)
+           shell=True passes the command to /bin/sh; metacharacters in user input (; | && $()) execute arbitrary commands.
+
+[CRITICAL] PY003 Unsafe deserialization  (CWE-502, A08:2021 Software and Data Integrity Failures)
+           vulnerable_app/app.py:148  ->  notes_list = pickle.loads(data)
+           pickle.loads() can execute arbitrary code when given attacker-controlled data. Use JSON with schema validation.
+
+[HIGH    ] PY006 Hard-coded secret or credential  (CWE-798, A07:2021 Identification and Authentication Failures)
+           vulnerable_app/app.py:21  ->  app.secret_key = "notekeeper-secret-123"
+           'secret_key' is assigned a literal string; load it from the environment or a secrets manager instead.
+
+[HIGH    ] PY006 Hard-coded secret or credential  (CWE-798, A07:2021 Identification and Authentication Failures)
+           vulnerable_app/app.py:22  ->  ADMIN_PASSWORD = "admin123"
+           'ADMIN_PASSWORD' is assigned a literal string; load it from the environment or a secrets manager instead.
+
+[HIGH    ] PY008 Autoescaping disabled in template (|safe / Markup)  (CWE-79, A03:2021 Injection)
+           vulnerable_app/app.py:26  ->  PAGE = """<!doctype html><title>NoteKeeper</title>
+           The Jinja '|safe' filter disables auto-escaping; any user data rendered through it leads to Cross-Site Scripting.
+
+[HIGH    ] PY005 Weak hash algorithm (MD5/SHA1)  (CWE-328, A02:2021 Cryptographic Failures)
+           vulnerable_app/app.py:48  ->  (user, hashlib.md5(pwd.encode()).hexdigest(), role))
+           MD5/SHA-1 are fast and broken; for passwords use a slow, salted KDF (scrypt, Argon2, bcrypt, PBKDF2).
+
+[HIGH    ] PY005 Weak hash algorithm (MD5/SHA1)  (CWE-328, A02:2021 Cryptographic Failures)
+           vulnerable_app/app.py:72  ->  pwd_hash = hashlib.md5(password.encode()).hexdigest()
+           MD5/SHA-1 are fast and broken; for passwords use a slow, salted KDF (scrypt, Argon2, bcrypt, PBKDF2).
+
+[HIGH    ] PY015 HTML built from user input without escaping  (CWE-79, A03:2021 Injection)
+           vulnerable_app/app.py:80  ->  return render("<p>Invalid credentials for user " + username + "</p>"), 401
+           User-controlled data is concatenated into HTML without escaping (XSS). Use templates with auto-escaping.
+
+[HIGH    ] PY015 HTML built from user input without escaping  (CWE-79, A03:2021 Injection)
+           vulnerable_app/app.py:113  ->  return render(f"<h2>{note['title']}</h2><p>{note['body']}</p>")
+           User-controlled data is concatenated into HTML without escaping (XSS). Use templates with auto-escaping.
+
+[HIGH    ] PY015 HTML built from user input without escaping  (CWE-79, A03:2021 Injection)
+           vulnerable_app/app.py:119  ->  return render(f"<form><input name='q' value='{q}'><button>Search</button></form>"
+           User-controlled data is concatenated into HTML without escaping (XSS). Use templates with auto-escaping.
+
+[HIGH    ] PY015 HTML built from user input without escaping  (CWE-79, A03:2021 Injection)
+           vulnerable_app/app.py:129  ->  return render("<pre>" + output.decode(errors="replace") + "</pre>")
+           User-controlled data is concatenated into HTML without escaping (XSS). Use templates with auto-escaping.
+
+[HIGH    ] PY009 File path built from user input  (CWE-22, A01:2021 Broken Access Control)
+           vulnerable_app/app.py:135  ->  return send_file(os.path.join(UPLOAD_DIR, filename))
+           A file path is derived from user input; '../' or an absolute path escapes the intended directory. Use werkzeug.utils.secure_filename / safe_join and send_from_directory.
+
+[HIGH    ] PY016 Uploaded file saved with client-supplied name  (CWE-434, A04:2021 Insecure Design)
+           vulnerable_app/app.py:141  ->  f.save(os.path.join(UPLOAD_DIR, f.filename))
+           The client controls file.filename ('../../app.py'); sanitise it with secure_filename, restrict extensions and size.
+
+[HIGH    ] PY009 File path built from user input  (CWE-22, A01:2021 Broken Access Control)
+           vulnerable_app/app.py:141  ->  f.save(os.path.join(UPLOAD_DIR, f.filename))
+           A file path is derived from user input; '../' or an absolute path escapes the intended directory. Use werkzeug.utils.secure_filename / safe_join and send_from_directory.
+
+[HIGH    ] PY015 HTML built from user input without escaping  (CWE-79, A03:2021 Injection)
+           vulnerable_app/app.py:142  ->  return render("Uploaded " + f.filename)
+           User-controlled data is concatenated into HTML without escaping (XSS). Use templates with auto-escaping.
+
+[HIGH    ] PY011 Authorization decision based on client cookie  (CWE-565, A01:2021 Broken Access Control)
+           vulnerable_app/app.py:154  ->  if request.cookies.get("role") == "admin" or session.get("role") == "admin":
+           Cookies are fully controlled by the client; never trust them for authorisation. Use the server-side session / database.
+
+[HIGH    ] PY007 Flask debug mode enabled  (CWE-489, A05:2021 Security Misconfiguration)
+           vulnerable_app/app.py:168  ->  app.run(host="0.0.0.0", port=5000, debug=True)
+           The Werkzeug debugger allows remote code execution and leaks source code. Never enable it outside local development.
+
+[MEDIUM  ] PY010 Open redirect  (CWE-601, A01:2021 Broken Access Control)
+           vulnerable_app/app.py:79  ->  return redirect(request.args.get("next", "/notes"))
+           Redirect target comes from the request; attackers can send victims to a phishing site. Allow only relative, same-site paths.
+
+[MEDIUM  ] PY012 Stack trace returned to the client  (CWE-209, A05:2021 Security Misconfiguration)
+           vulnerable_app/app.py:163  ->  return "<pre>" + traceback.format_exc() + "</pre>", 500
+           Internal stack traces leak file paths, code and library versions to attackers.
+
+[LOW     ] PY014 Server bound to all interfaces  (CWE-1327, A05:2021 Security Misconfiguration)
+           vulnerable_app/app.py:168  ->  app.run(host="0.0.0.0", port=5000, debug=True)
+           Listening on 0.0.0.0 exposes the app on every network interface; put it behind a reverse proxy.
+
+Summary: CRITICAL=3, HIGH=15, MEDIUM=2, LOW=1
+JSON report written to reports/sast_vulnerable.json

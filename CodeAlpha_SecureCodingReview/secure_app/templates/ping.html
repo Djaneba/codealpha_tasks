@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% block title %}Network tool{% endblock %}{% block content %}
+<form><input name="host" placeholder="IP or hostname" value="{{ host or '' }}" maxlength="253"><button>Ping</button></form>
+{% if output %}<pre>{{ output }}</pre>{% endif %}{% endblock %}

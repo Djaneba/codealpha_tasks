@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Upload{% endblock %}{% block content %}
+<form method="post" enctype="multipart/form-data">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <input type="file" name="file" accept=".txt,.pdf,.png,.jpg,.jpeg" required><button>Upload</button>
+</form>{% endblock %}
