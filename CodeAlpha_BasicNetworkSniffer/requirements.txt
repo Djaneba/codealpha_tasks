@@ -1,0 +1,1 @@
+scapy>=2.5.0   # optional: cross-platform capture + BPF filters

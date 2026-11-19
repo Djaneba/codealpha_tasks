@@ -1,0 +1,113 @@
+
+  ____        _  __  __
+ / ___| _ __ (_)/ _|/ _| ___ _ __   CodeAlpha - Basic Network Sniffer v1.0.0
+ \___ \| '_ \| | |_| |_ / _ \ '__|  Capture . Dissect . Understand
+  ___) | | | | |  _|  _|  __/ |
+ |____/|_| |_|_|_| |_|  \___|_|
+
+[*] Back-end: socket | Interface: lo | Count: unlimited | Timeout: 5.0
+[*] Filters: none
+[*] Press Ctrl+C to stop.
+
+No.          Time  Proto                     Source    Destination                 Len  Info
+--------------------------------------------------------------------------------------------------------------
+#1        0.9522s  TCP              127.0.0.1:37076 -> 127.0.0.1:8099              74B  [SYN] seq=3408933828 ack=0 win=65495 len=0
+      Ethernet  src=00:00:00:00:00:00  dst=00:00:00:00:00:00  type=IPv4
+      IPv4      version=4  header_len=20  tos=0  total_len=60  id=22203  flags=DF   ttl=64  protocol=TCP  checksum=0xe5fe  src=127.0.0.1  dst=127.0.0.1
+      TCP       src_port=37076  dst_port=8099  seq=3408933828  ack=0  header_len=40  flags=SYN  window=65495
+#2        0.9524s  TCP               127.0.0.1:8099 -> 127.0.0.1:37076             74B  [SYN,ACK] seq=683410949 ack=3408933829 win=65483 len=0
+      Ethernet  src=00:00:00:00:00:00  dst=00:00:00:00:00:00  type=IPv4
+      IPv4      version=4  header_len=20  tos=0  total_len=60  id=0  flags=DF   ttl=64  protocol=TCP  checksum=0x3cba  src=127.0.0.1  dst=127.0.0.1
+      TCP       src_port=8099  dst_port=37076  seq=683410949  ack=3408933829  header_len=40  flags=SYN,ACK  window=65483
+#3        0.9525s  TCP              127.0.0.1:37076 -> 127.0.0.1:8099              66B  [ACK] seq=3408933829 ack=683410950 win=64 len=0
+      Ethernet  src=00:00:00:00:00:00  dst=00:00:00:00:00:00  type=IPv4
+      IPv4      version=4  header_len=20  tos=0  total_len=52  id=22204  flags=DF   ttl=64  protocol=TCP  checksum=0xe605  src=127.0.0.1  dst=127.0.0.1
+      TCP       src_port=37076  dst_port=8099  seq=3408933829  ack=683410950  header_len=32  flags=ACK  window=64
+#4        0.9525s  HTTP             127.0.0.1:37076 -> 127.0.0.1:8099             143B  GET / HTTP/1.1  [Host: 127.0.0.1:8099]
+      Ethernet  src=00:00:00:00:00:00  dst=00:00:00:00:00:00  type=IPv4
+      IPv4      version=4  header_len=20  tos=0  total_len=129  id=22205  flags=DF   ttl=64  protocol=TCP  checksum=0xe5b7  src=127.0.0.1  dst=127.0.0.1
+      TCP       src_port=37076  dst_port=8099  seq=3408933829  ack=683410950  header_len=32  flags=PSH,ACK  window=64
+      HTTP      start-line=GET / HTTP/1.1  host=127.0.0.1:8099
+      Payload (77 bytes, truncated):
+      0000  47 45 54 20 2f 20 48 54 54 50 2f 31 2e 31 0d 0a  GET / HTTP/1.1..
+      0010  48 6f 73 74 3a 20 31 32 37 2e 30 2e 30 2e 31 3a  Host: 127.0.0.1:
+      0020  38 30 39 39 0d 0a 55 73 65 72 2d 41 67 65 6e 74  8099..User-Agent
+#5        0.9526s  TCP               127.0.0.1:8099 -> 127.0.0.1:37076             66B  [ACK] seq=683410950 ack=3408933906 win=64 len=0
+      Ethernet  src=00:00:00:00:00:00  dst=00:00:00:00:00:00  type=IPv4
+      IPv4      version=4  header_len=20  tos=0  total_len=52  id=32231  flags=DF   ttl=64  protocol=TCP  checksum=0xbeda  src=127.0.0.1  dst=127.0.0.1
+      TCP       src_port=8099  dst_port=37076  seq=683410950  ack=3408933906  header_len=32  flags=ACK  window=64
+#6        0.9538s  HTTP              127.0.0.1:8099 -> 127.0.0.1:37076            222B  HTTP/1.0 200 OK
+      Ethernet  src=00:00:00:00:00:00  dst=00:00:00:00:00:00  type=IPv4
+      IPv4      version=4  header_len=20  tos=0  total_len=208  id=32232  flags=DF   ttl=64  protocol=TCP  checksum=0xbe3d  src=127.0.0.1  dst=127.0.0.1
+      TCP       src_port=8099  dst_port=37076  seq=683410950  ack=3408933906  header_len=32  flags=PSH,ACK  window=64
+      HTTP      start-line=HTTP/1.0 200 OK  host=-
+      Payload (156 bytes, truncated):
+      0000  48 54 54 50 2f 31 2e 30 20 32 30 30 20 4f 4b 0d  HTTP/1.0 200 OK.
+      0010  0a 53 65 72 76 65 72 3a 20 53 69 6d 70 6c 65 48  .Server: SimpleH
+      0020  54 54 50 2f 30 2e 36 20 50 79 74 68 6f 6e 2f 33  TTP/0.6 Python/3
+#7        0.9541s  TCP              127.0.0.1:37076 -> 127.0.0.1:8099              66B  [ACK] seq=3408933906 ack=683411106 win=64 len=0
+      Ethernet  src=00:00:00:00:00:00  dst=00:00:00:00:00:00  type=IPv4
+      IPv4      version=4  header_len=20  tos=0  total_len=52  id=22206  flags=DF   ttl=64  protocol=TCP  checksum=0xe603  src=127.0.0.1  dst=127.0.0.1
+      TCP       src_port=37076  dst_port=8099  seq=3408933906  ack=683411106  header_len=32  flags=ACK  window=64
+#8        0.9541s  TCP               127.0.0.1:8099 -> 127.0.0.1:37076            521B  [PSH,ACK] seq=683411106 ack=3408933906 win=64 len=455
+      Ethernet  src=00:00:00:00:00:00  dst=00:00:00:00:00:00  type=IPv4
+      IPv4      version=4  header_len=20  tos=0  total_len=507  id=32233  flags=DF   ttl=64  protocol=TCP  checksum=0xbd11  src=127.0.0.1  dst=127.0.0.1
+      TCP       src_port=8099  dst_port=37076  seq=683411106  ack=3408933906  header_len=32  flags=PSH,ACK  window=64
+      Payload (455 bytes, truncated):
+      0000  3c 21 44 4f 43 54 59 50 45 20 48 54 4d 4c 3e 0a  <!DOCTYPE HTML>.
+      0010  3c 68 74 6d 6c 20 6c 61 6e 67 3d 22 65 6e 22 3e  <html lang="en">
+      0020  0a 3c 68 65 61 64 3e 0a 3c 6d 65 74 61 20 63 68  .<head>.<meta ch
+#9        0.9542s  TCP              127.0.0.1:37076 -> 127.0.0.1:8099              66B  [ACK] seq=3408933906 ack=683411561 win=64 len=0
+      Ethernet  src=00:00:00:00:00:00  dst=00:00:00:00:00:00  type=IPv4
+      IPv4      version=4  header_len=20  tos=0  total_len=52  id=22207  flags=DF   ttl=64  protocol=TCP  checksum=0xe602  src=127.0.0.1  dst=127.0.0.1
+      TCP       src_port=37076  dst_port=8099  seq=3408933906  ack=683411561  header_len=32  flags=ACK  window=64
+#10       0.9542s  TCP               127.0.0.1:8099 -> 127.0.0.1:37076             66B  [FIN,ACK] seq=683411561 ack=3408933906 win=64 len=0
+      Ethernet  src=00:00:00:00:00:00  dst=00:00:00:00:00:00  type=IPv4
+      IPv4      version=4  header_len=20  tos=0  total_len=52  id=32234  flags=DF   ttl=64  protocol=TCP  checksum=0xbed7  src=127.0.0.1  dst=127.0.0.1
+      TCP       src_port=8099  dst_port=37076  seq=683411561  ack=3408933906  header_len=32  flags=FIN,ACK  window=64
+#11       0.9542s  TCP              127.0.0.1:37076 -> 127.0.0.1:8099              66B  [FIN,ACK] seq=3408933906 ack=683411562 win=64 len=0
+      Ethernet  src=00:00:00:00:00:00  dst=00:00:00:00:00:00  type=IPv4
+      IPv4      version=4  header_len=20  tos=0  total_len=52  id=22208  flags=DF   ttl=64  protocol=TCP  checksum=0xe601  src=127.0.0.1  dst=127.0.0.1
+      TCP       src_port=37076  dst_port=8099  seq=3408933906  ack=683411562  header_len=32  flags=FIN,ACK  window=64
+#12       0.9543s  TCP               127.0.0.1:8099 -> 127.0.0.1:37076             66B  [ACK] seq=683411562 ack=3408933907 win=64 len=0
+      Ethernet  src=00:00:00:00:00:00  dst=00:00:00:00:00:00  type=IPv4
+      IPv4      version=4  header_len=20  tos=0  total_len=52  id=32235  flags=DF   ttl=64  protocol=TCP  checksum=0xbed6  src=127.0.0.1  dst=127.0.0.1
+      TCP       src_port=8099  dst_port=37076  seq=683411562  ack=3408933907  header_len=32  flags=ACK  window=64
+#13       0.9720s  DNS              127.0.0.1:60389 -> 127.0.0.1:53                74B  DNS query codealpha.tech A
+      Ethernet  src=00:00:00:00:00:00  dst=00:00:00:00:00:00  type=IPv4
+      IPv4      version=4  header_len=20  tos=0  total_len=60  id=43717  flags=DF   ttl=64  protocol=UDP  checksum=0x91e9  src=127.0.0.1  dst=127.0.0.1
+      UDP       src_port=60389  dst_port=53  length=40
+      DNS       id=0x1234  qr=query  questions=1  answers=0  query=codealpha.tech (A)
+      Payload (32 bytes):
+      0000  12 34 01 00 00 01 00 00 00 00 00 00 09 63 6f 64  .4...........cod
+      0010  65 61 6c 70 68 61 04 74 65 63 68 00 00 01 00 01  ealpha.tech.....
+#14       0.9721s  ICMP                   127.0.0.1 -> 127.0.0.1                  102B  Destination Unreachable (code 3)
+      Ethernet  src=00:00:00:00:00:00  dst=00:00:00:00:00:00  type=IPv4
+      IPv4      version=4  header_len=20  tos=192  total_len=88  id=49264  flags=  ttl=64  protocol=ICMP  checksum=0xbb72  src=127.0.0.1  dst=127.0.0.1
+      ICMP      type=3  code=3  description=Destination Unreachable
+      Payload (60 bytes, truncated):
+      0000  45 00 00 3c aa c5 40 00 40 11 91 e9 7f 00 00 01  E..<..@.@.......
+      0010  7f 00 00 01 eb e5 00 35 00 28 fe 3b 12 34 01 00  .......5.(.;.4..
+      0020  00 01 00 00 00 00 00 00 09 63 6f 64 65 61 6c 70  .........codealp
+
+========================================================================
+  CAPTURE SUMMARY
+========================================================================
+  Packets captured : 14
+  Bytes captured   : 1,672
+  Duration         : 5.98s  (2.3 pkt/s)
+
+  Protocol distribution
+    TCP            10   71.4%  ###################################
+    HTTP            2   14.3%  #######
+    DNS             1    7.1%  ###
+    ICMP            1    7.1%  ###
+
+  Top talkers (bytes sent)
+    127.0.0.1                                     1,672 B
+
+  Top conversations
+    127.0.0.1 -> 127.0.0.1 [TCP]  12 pkts
+    127.0.0.1 -> 127.0.0.1 [UDP]  1 pkts
+    127.0.0.1 -> 127.0.0.1 [ICMP]  1 pkts
+========================================================================
